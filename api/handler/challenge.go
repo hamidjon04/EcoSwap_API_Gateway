@@ -9,6 +9,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @Summary      Yangi challenge yaratish
+// @Description  Ushbu endpoint yangi challenge yaratish uchun ishlatiladi.
+// @Tags         challenges
+// @Accept       json
+// @Produce      json
+// @Security 	 ApiKeyAuth
+// @Param        Authorization  header   string   true  "Bearer token"
+// @Param        challenge      body     challenges.Challenge  true  "Challenge payload"
+// @Success      200            {object} challenges.Challenge  "Successful response"
+// @Failure      400            {object} model.Error   "Bad request"
+// @Router       challenge/createChallenge    [post]
 func (h *Handler) CreateChallenge(c *gin.Context) {
 	req := pb.Challenge{}
 
@@ -29,6 +40,17 @@ func (h *Handler) CreateChallenge(c *gin.Context) {
 	c.JSON(http.StatusOK, resp)
 }
 
+// @Summary      challengening ishtirokchisiga bo'lish
+// @Description  Ushbu endpoint challengening ishtirokchisiga bo'lish uchun ishlatiladi.
+// @Tags         challenges
+// @Accept       json
+// @Produce      json
+// @Security 	 ApiKeyAuth
+// @Param        Authorization  header   string   true  "Bearer token"
+// @Param        attend          body     challenges.Attend  true  "Attend payload"
+// @Success      200            {object} challenges.Attend  "Successful response"
+// @Failure      400            {object} model.Error   "Bad request"
+// @Router       /challenge/attend   [post]
 func (h *Handler) AttendChallenge(c *gin.Context) {
 	req := pb.Attend{}
 
@@ -49,6 +71,17 @@ func (h *Handler) AttendChallenge(c *gin.Context) {
 	c.JSON(http.StatusOK, resp)
 }
 
+// @Summary      challenge natijasini yangilash
+// @Description  Ushbu endpoint challenge natijasini yangilash uchun ishlatiladi.
+// @Tags         challenges
+// @Accept       json
+// @Produce      json
+// @Security 	 ApiKeyAuth
+// @Param        Authorization  header   string   true  "Bearer token"
+// @Param        update          body     challenges.ChallengeUpdate  true  "Update payload"
+// @Success      200            {object} challenges.ChallengeUpdate  "Successful response"
+// @Failure      400            {object} model.Error   "Bad request"
+// @Router       /challenge/updateChallenge   [put]
 func (h *Handler) UpdateChallengeResult(c *gin.Context) {
 	req := pb.ChallengeUpdate{}
 
@@ -68,6 +101,17 @@ func (h *Handler) UpdateChallengeResult(c *gin.Context) {
 	c.JSON(http.StatusOK, resp)
 }
 
+// @Summary      Ekologik maslahat yaratish
+// @Description  Ushbu endpoint ekologik maslahat yaratish uchun ishlatiladi.
+// @Tags         eco_tips
+// @Accept       json
+// @Produce      json
+// @Security 	 ApiKeyAuth
+// @Param        Authorization  header   string   true  "Bearer token"
+// @Param        create          body     challenges.EcoTip  true  "Create payload"
+// @Success      200            {object} challenges.EcoTip  "Successful response"
+// @Failure      400            {object} model.Error   "Bad request"
+// @Router       /challenge/createEcoTip   [post]
 func (h *Handler) CreateEcoTips(c *gin.Context) {
 	req := pb.EcoTip{}
 
@@ -87,11 +131,24 @@ func (h *Handler) CreateEcoTips(c *gin.Context) {
 	c.JSON(http.StatusOK, resp)
 }
 
+// @Summary      Ekologik maslahatlar ro'yxati
+// @Description  Ushbu endpoint ekologik maslahatlar ro'yxatini olish uchun ishlatiladi.
+// @Tags         eco_tips
+// @Accept       json
+// @Produce      json
+// @Security 	 ApiKeyAuth
+// @Param        Authorization  header   string   true  "Bearer token"
+// @Param        title          query     string   false  "Filter by title"
+// @Param        limit          path      int      true   "Limit"
+// @Param        offset         path      int      true   "Offset"
+// @Success      200            {object}  challenges.EcoTipList  "Successful response"
+// @Failure      400            {object}  model.Error    "Bad request"
+// @Router       /challenge/getAllEcoTips/{limit}/{offset}   [get]
 func (h *Handler) GetAllEcoTips(c *gin.Context) {
 	req := pb.FilterTip{}
 
 	req.Title = c.Query("title")
-	
+
 	limit, err := strconv.Atoi(c.Param("limit"))
 	if err != nil {
 		h.Logger.Error(fmt.Sprintf("Limit kiritilmadi yoki xato kiritildi: %v", err))

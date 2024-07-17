@@ -19,6 +19,7 @@ type Config struct {
 	SIGNING_KEY  string
 	REDIS_PORT   string
 	ITEM_SERVICE string
+	API_GATEWAY  string
 }
 
 func Load() Config {
@@ -37,6 +38,7 @@ func Load() Config {
 	config.SIGNING_KEY = cast.ToString(Coalesce("SIGNING_KEY", "secret"))
 	config.REDIS_PORT = cast.ToString(Coalesce("REDIS_PORT", "6379"))
 	config.ITEM_SERVICE = cast.ToString(Coalesce("ITEM_SERVICE", "6666"))
+	config.API_GATEWAY = cast.ToString(Coalesce("API_GATEWAY", "4444"))
 
 	return config
 }
