@@ -1,0 +1,1574 @@
+definitions:
+  challenges.Attend:
+    properties:
+      challengeId:
+        type: string
+      userId:
+        type: string
+    type: object
+  challenges.AttendResp:
+    properties:
+      challengeId:
+        type: string
+      joinedAt:
+        type: string
+      status:
+        type: string
+      userId:
+        type: string
+    type: object
+  challenges.Challenge:
+    properties:
+      description:
+        type: string
+      endDate:
+        type: string
+      rewardPoints:
+        type: integer
+      startDate:
+        type: string
+      title:
+        type: string
+    type: object
+  challenges.ChallengeUpdate:
+    properties:
+      challengeId:
+        type: string
+      resItemCount:
+        type: integer
+      userId:
+        type: string
+    type: object
+  challenges.EcoTip:
+    properties:
+      content:
+        type: string
+      title:
+        type: string
+    type: object
+  challenges.RespChallenge:
+    properties:
+      createdAt:
+        type: string
+      description:
+        type: string
+      endDate:
+        type: string
+      id:
+        type: string
+      rewardPoints:
+        type: integer
+      startDate:
+        type: string
+      title:
+        type: string
+    type: object
+  challenges.RespEcoTip:
+    properties:
+      content:
+        type: string
+      createdAt:
+        type: string
+      id:
+        type: string
+      title:
+        type: string
+    type: object
+  challenges.RespUpdate:
+    properties:
+      challengeId:
+        type: string
+      resItemCount:
+        type: integer
+      status:
+        type: string
+      updatedAt:
+        type: string
+      userId:
+        type: string
+    type: object
+  challenges.Tips:
+    properties:
+      limit:
+        type: integer
+      page:
+        type: integer
+      tips:
+        items:
+          $ref: '#/definitions/challenges.RespEcoTip'
+        type: array
+      total:
+        type: integer
+    type: object
+  items.AllItem:
+    properties:
+      categoryId:
+        type: string
+      condition:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      ownerId:
+        type: string
+      status:
+        type: string
+    type: object
+  items.AllItems:
+    properties:
+      items:
+        items:
+          $ref: '#/definitions/items.AllItem'
+        type: array
+      limit:
+        type: integer
+      page:
+        type: integer
+      total:
+        type: integer
+    type: object
+  items.Category:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+    type: object
+  items.CategoryResponse:
+    properties:
+      createdAt:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+  items.GetItemResp:
+    properties:
+      categoryId:
+        type: string
+      condition:
+        type: string
+      createdAt:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      ownerId:
+        type: string
+      status:
+        type: string
+      swapPreference:
+        items:
+          type: string
+        type: array
+      updatedAt:
+        type: string
+    type: object
+  items.Item:
+    properties:
+      categoryId:
+        type: string
+      condition:
+        type: string
+      description:
+        type: string
+      name:
+        type: string
+      ownerId:
+        type: string
+      swapPreference:
+        items:
+          type: string
+        type: array
+    type: object
+  items.ItemResponce:
+    properties:
+      categoryId:
+        type: string
+      condition:
+        type: string
+      createdAt:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      ownerId:
+        type: string
+      status:
+        type: string
+      swapPreference:
+        items:
+          type: string
+        type: array
+    type: object
+  items.ItemUpdate:
+    properties:
+      condition:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      status:
+        type: string
+    type: object
+  items.Status:
+    properties:
+      message:
+        type: string
+      status:
+        type: boolean
+    type: object
+  items.UpdateResponse:
+    properties:
+      categoryId:
+        type: string
+      condition:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      ownerId:
+        type: string
+      status:
+        type: string
+      swapPreference:
+        items:
+          type: string
+        type: array
+      updatedAt:
+        type: string
+    type: object
+  model.Error:
+    properties:
+      message:
+        type: string
+    type: object
+  rating.Activity:
+    properties:
+      ecoPointsEarned:
+        type: integer
+      itemsListed:
+        type: integer
+      recyclingSubmissions:
+        type: integer
+      swapsCompleted:
+        type: integer
+      swapsInitiated:
+        type: integer
+      userId:
+        type: string
+    type: object
+  rating.RatingReq:
+    properties:
+      comment:
+        type: string
+      raterId:
+        type: string
+      rating:
+        type: number
+      swapId:
+        type: string
+      userId:
+        type: string
+    type: object
+  rating.RatingResp:
+    properties:
+      comment:
+        type: string
+      createdAt:
+        type: string
+      id:
+        type: string
+      raterId:
+        type: string
+      rating:
+        type: number
+      swapId:
+        type: string
+      userId:
+        type: string
+    type: object
+  rating.RatingUser:
+    properties:
+      comment:
+        type: string
+      createdAt:
+        type: string
+      id:
+        type: string
+      raterId:
+        type: string
+      rating:
+        type: number
+      swapId:
+        type: string
+    type: object
+  rating.UserRating:
+    properties:
+      averageRating:
+        type: number
+      limit:
+        type: integer
+      page:
+        type: integer
+      ratings:
+        items:
+          $ref: '#/definitions/rating.RatingUser'
+        type: array
+      totalRatings:
+        type: integer
+      userId:
+        type: string
+    type: object
+  recycling_center.Center:
+    properties:
+      acceptedMaterials:
+        items:
+          type: string
+        type: array
+      address:
+        type: string
+      contactNumber:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      workingHours:
+        type: string
+    type: object
+  recycling_center.ResAllCenter:
+    properties:
+      centers:
+        items:
+          $ref: '#/definitions/recycling_center.Center'
+        type: array
+      limit:
+        type: integer
+      page:
+        type: integer
+      total:
+        type: integer
+    type: object
+  recycling_center.ResCenter:
+    properties:
+      acceptedMaterials:
+        items:
+          type: string
+        type: array
+      address:
+        type: string
+      contactNumber:
+        type: string
+      name:
+        type: string
+      workingHours:
+        type: string
+    type: object
+  recycling_center.ResponceResCenter:
+    properties:
+      acceptedMaterials:
+        items:
+          type: string
+        type: array
+      address:
+        type: string
+      contactNumber:
+        type: string
+      createdAt:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      workingHours:
+        type: string
+    type: object
+  recycling_center.Statistics:
+    properties:
+      TotalEarnedPoints:
+        type: integer
+      TotalRecycledItems:
+        type: integer
+      TotalSwaps:
+        type: integer
+      jsonDataTopCateg:
+        type: string
+      jsonDateTopCenter:
+        type: string
+    type: object
+  recycling_center.Submission:
+    properties:
+      centerId:
+        type: string
+      jsonDataItems:
+        type: string
+      userId:
+        type: string
+    type: object
+  recycling_center.SubmissionResp:
+    properties:
+      centerId:
+        type: string
+      createdAt:
+        type: string
+      ecoPointsEarned:
+        type: integer
+      id:
+        type: string
+      jsonDataItems:
+        type: string
+      userId:
+        type: string
+    type: object
+  swaps.AllSwaps:
+    properties:
+      limit:
+        type: integer
+      page:
+        type: integer
+      swaps:
+        items:
+          $ref: '#/definitions/swaps.Swap'
+        type: array
+      total:
+        type: integer
+    type: object
+  swaps.Reason:
+    properties:
+      reason:
+        type: string
+      swapId:
+        type: string
+    type: object
+  swaps.Responce:
+    properties:
+      id:
+        type: string
+      offeredItemId:
+        type: string
+      ownerId:
+        type: string
+      reason:
+        type: string
+      requestedItemId:
+        type: string
+      requesterId:
+        type: string
+      status:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  swaps.Swap:
+    properties:
+      createdAt:
+        type: string
+      id:
+        type: string
+      offeredItemId:
+        type: string
+      ownerId:
+        type: string
+      requestedItemId:
+        type: string
+      requesterId:
+        type: string
+      status:
+        type: string
+    type: object
+  swaps.SwapRequest:
+    properties:
+      message:
+        type: string
+      offeredItemId:
+        type: string
+      ownerId:
+        type: string
+      requestedItemId:
+        type: string
+      requesterId:
+        type: string
+    type: object
+  swaps.SwapResponce:
+    properties:
+      createdAt:
+        type: string
+      id:
+        type: string
+      message:
+        type: string
+      offeredItemId:
+        type: string
+      ownerId:
+        type: string
+      requestedItemId:
+        type: string
+      requesterId:
+        type: string
+      status:
+        type: string
+    type: object
+  users.CreateEcoPoints:
+    properties:
+      ecoPoints:
+        type: integer
+      reason:
+        type: string
+      userId:
+        type: string
+    type: object
+  users.Histories:
+    properties:
+      histories:
+        items:
+          $ref: '#/definitions/users.HistoryUserPoints'
+        type: array
+      limit:
+        type: integer
+      page:
+        type: integer
+      total:
+        type: integer
+    type: object
+  users.HistoryUserPoints:
+    properties:
+      date:
+        type: string
+      points:
+        type: integer
+      reason:
+        type: string
+      transactionId:
+        type: string
+      type:
+        type: string
+    type: object
+  users.InfoUserEcoPoints:
+    properties:
+      addedPoints:
+        type: integer
+      date:
+        type: string
+      ecoPoints:
+        type: integer
+      reason:
+        type: string
+      userId:
+        type: string
+    type: object
+  users.ProfileUpdate:
+    properties:
+      bio:
+        type: string
+      fullName:
+        type: string
+      id:
+        type: string
+      username:
+        type: string
+    type: object
+  users.Status:
+    properties:
+      message:
+        type: string
+      status:
+        type: boolean
+    type: object
+  users.UpdateResponse:
+    properties:
+      email:
+        type: string
+      fullName:
+        type: string
+      id:
+        type: string
+      updatedAt:
+        type: string
+      username:
+        type: string
+    type: object
+  users.User:
+    properties:
+      ecoPoints:
+        type: integer
+      fullName:
+        type: string
+      id:
+        type: string
+      username:
+        type: string
+    type: object
+  users.UserEcoPoints:
+    properties:
+      ecoPoints:
+        type: integer
+      lastUpdated:
+        type: string
+      userId:
+        type: string
+    type: object
+  users.UserInfo:
+    properties:
+      createdAt:
+        type: string
+      ecoPoints:
+        type: integer
+      email:
+        type: string
+      fullName:
+        type: string
+      id:
+        type: string
+      updatedAt:
+        type: string
+      username:
+        type: string
+    type: object
+  users.Users:
+    properties:
+      limit:
+        type: integer
+      page:
+        type: integer
+      total:
+        type: integer
+      users:
+        items:
+          $ref: '#/definitions/users.User'
+        type: array
+    type: object
+host: localhost:4444
+info:
+  contact: {}
+  description: This is a sample server for Auth Service.
+  title: Auth Service API3
+  version: "1.0"
+paths:
+  /center/create:
+    post:
+      consumes:
+      - application/json
+      description: Ushbu endpoint yangi qayta ishlash markazini yaratish uchun ishlatiladi.
+      parameters:
+      - description: Recycling Center Payload
+        in: body
+        name: recycling_center
+        required: true
+        schema:
+          $ref: '#/definitions/recycling_center.ResCenter'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/recycling_center.ResponceResCenter'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Yangi qayta ishlash markazi yaratish
+      tags:
+      - center
+  /center/productDelivery:
+    post:
+      consumes:
+      - application/json
+      description: Ushbu endpoint maxsulot yetkazib berish uchun ishlatiladi.
+      parameters:
+      - description: Delivery Payload
+        in: body
+        name: delivery_body
+        required: true
+        schema:
+          $ref: '#/definitions/recycling_center.Submission'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/recycling_center.SubmissionResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Maxsulot yetkazib berish
+      tags:
+      - center
+  /center/search:
+    get:
+      consumes:
+      - application/json
+      description: Ushbu endpoint qayta ishlash markazini qidirish uchun ishlatiladi.
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: string
+      - description: Offset
+        in: query
+        name: offset
+        type: string
+      - description: Material type
+        in: query
+        name: material
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/recycling_center.ResAllCenter'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Qayta ishlash markazini qidirish
+      tags:
+      - center
+  /center/statistics:
+    get:
+      consumes:
+      - application/json
+      description: Ushbu endpoint statistika ma'lumotlarini olish uchun ishlatiladi.
+      parameters:
+      - description: Start date in format yyyy-mm-dd
+        in: query
+        name: start_date
+        required: true
+        type: string
+      - description: End date in format yyyy-mm-dd
+        in: query
+        name: end_date
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/recycling_center.Statistics'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Statistika olish
+      tags:
+      - center
+  /challenge/attend:
+    post:
+      consumes:
+      - application/json
+      description: Ushbu endpoint challengening ishtirokchisiga bo'lish uchun ishlatiladi.
+      parameters:
+      - description: Attend payload
+        in: body
+        name: attend
+        required: true
+        schema:
+          $ref: '#/definitions/challenges.Attend'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: '#/definitions/challenges.AttendResp'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: challengening ishtirokchisiga bo'lish
+      tags:
+      - challenge
+  /challenge/createChallenge:
+    post:
+      consumes:
+      - application/json
+      description: Ushbu endpoint yangi challenge yaratish uchun ishlatiladi.
+      parameters:
+      - description: Challenge payload
+        in: body
+        name: challenge
+        required: true
+        schema:
+          $ref: '#/definitions/challenges.Challenge'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: '#/definitions/challenges.RespChallenge'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Yangi challenge yaratish
+      tags:
+      - challenge
+  /challenge/createEcoTip:
+    post:
+      consumes:
+      - application/json
+      description: Ushbu endpoint ekologik maslahat yaratish uchun ishlatiladi.
+      parameters:
+      - description: Create payload
+        in: body
+        name: create
+        required: true
+        schema:
+          $ref: '#/definitions/challenges.EcoTip'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: '#/definitions/challenges.RespEcoTip'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Ekologik maslahat yaratish
+      tags:
+      - ico_tip
+  /challenge/getAllEcoTips/:
+    get:
+      consumes:
+      - application/json
+      description: Ushbu endpoint ekologik maslahatlar ro'yxatini olish uchun ishlatiladi.
+      parameters:
+      - description: Filter by title
+        in: query
+        name: title
+        type: string
+      - description: Limit
+        in: query
+        name: limit
+        type: string
+      - description: Offset
+        in: query
+        name: offset
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: '#/definitions/challenges.Tips'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Ekologik maslahatlar ro'yxati
+      tags:
+      - ico_tip
+  /challenge/updateChallenge:
+    put:
+      consumes:
+      - application/json
+      description: Ushbu endpoint challenge natijasini yangilash uchun ishlatiladi.
+      parameters:
+      - description: Update payload
+        in: body
+        name: update
+        required: true
+        schema:
+          $ref: '#/definitions/challenges.ChallengeUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: '#/definitions/challenges.RespUpdate'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: challenge natijasini yangilash
+      tags:
+      - challenge
+  /item/createCategory:
+    post:
+      consumes:
+      - application/json
+      description: Ushbu endpoint kategoriya yaratish uchun ishlatiladi.
+      parameters:
+      - description: Category object
+        in: body
+        name: category
+        required: true
+        schema:
+          $ref: '#/definitions/items.Category'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: '#/definitions/items.CategoryResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Kategoriya yaratish
+      tags:
+      - item
+  /item/createItem:
+    post:
+      consumes:
+      - application/json
+      description: Ushbu endpoint mahsulot qo'shish uchun ishlatiladi.
+      parameters:
+      - description: Item object
+        in: body
+        name: item
+        required: true
+        schema:
+          $ref: '#/definitions/items.Item'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: '#/definitions/items.ItemResponce'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Mahsulot qo'shish
+      tags:
+      - item
+  /item/deleteItem/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Ushbu endpoint mahsulotni o'chirish uchun ishlatiladi.
+      parameters:
+      - description: Item ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: '#/definitions/items.Status'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Mahsulotni o'chirish
+      tags:
+      - item
+  /item/getAllItems:
+    get:
+      consumes:
+      - application/json
+      description: Ushbu endpoint barcha mahsulotlarni olish uchun ishlatiladi.
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: string
+      - description: Offset
+        in: query
+        name: offset
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: '#/definitions/items.AllItems'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Barcha mahsulotlarni olish
+      tags:
+      - item
+  /item/getItem/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Ushbu endpoint mahsulotni olish uchun ishlatiladi.
+      parameters:
+      - description: Item ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: '#/definitions/items.GetItemResp'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Mahsulotni olish
+      tags:
+      - item
+  /item/searchItem:
+    get:
+      consumes:
+      - application/json
+      description: Ushbu endpoint mahsulotlarni qidirish uchun ishlatiladi.
+      parameters:
+      - description: Category ID
+        in: query
+        name: category_id
+        type: string
+      - description: Condition
+        in: query
+        name: condition
+        type: string
+      - description: Name
+        in: query
+        name: name
+        type: string
+      - description: Limit
+        in: query
+        name: limit
+        type: string
+      - description: Offset
+        in: query
+        name: offset
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: '#/definitions/items.AllItems'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Mahsulotlarni qidirish
+      tags:
+      - item
+  /item/updateItem:
+    put:
+      consumes:
+      - application/json
+      description: Ushbu endpoint mahsulotni yangilash uchun ishlatiladi.
+      parameters:
+      - description: Item Update object
+        in: body
+        name: item_update
+        required: true
+        schema:
+          $ref: '#/definitions/items.ItemUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: '#/definitions/items.UpdateResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Mahsulotni yangilash
+      tags:
+      - item
+  /rating/createRating:
+    post:
+      consumes:
+      - application/json
+      description: Ushbu endpoint foydalanuvchi reytingini yaratish uchun ishlatiladi.
+      parameters:
+      - description: Rating request object
+        in: body
+        name: rating
+        required: true
+        schema:
+          $ref: '#/definitions/rating.RatingReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: '#/definitions/rating.RatingResp'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Foydalanuvchi reytingini yaratish
+      tags:
+      - rating
+  /rating/getUserRating/{user_id}:
+    get:
+      consumes:
+      - application/json
+      description: Ushbu endpoint foydalanuvchi reytingini olish uchun ishlatiladi.
+      parameters:
+      - description: User ID
+        in: path
+        name: user_id
+        required: true
+        type: string
+      - description: Limit
+        in: query
+        name: limit
+        type: string
+      - description: Offset
+        in: query
+        name: offset
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: '#/definitions/rating.UserRating'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Foydalanuvchi reytingini olish
+      tags:
+      - rating
+  /rating/userActivity/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Ushbu endpoint foydalanuvchi faoliyatini olish uchun ishlatiladi.
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Start date (YYYY-MM-DD)
+        in: query
+        name: start_date
+        required: true
+        type: string
+      - description: End date (YYYY-MM-DD)
+        in: query
+        name: end_date
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: '#/definitions/rating.Activity'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Foydalanuvchi faoliyatini olish
+      tags:
+      - rating
+  /swap/adoptionSwap:
+    post:
+      consumes:
+      - application/json
+      description: Ushbu endpoint asosida swap so'rovi uchun sababni qabul qilish
+        uchun ishlatiladi.
+      parameters:
+      - description: Reason Payload
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/swaps.Reason'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: '#/definitions/swaps.Responce'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Swap so'rovini qabul qilish
+      tags:
+      - swap
+  /swap/allRequests/:
+    get:
+      consumes:
+      - application/json
+      description: Ushbu endpoint asosida barcha swap so'rovlarni olish uchun ishlatiladi.
+      parameters:
+      - description: Status of swap requests (e.g., pending, accepted, rejected)
+        in: query
+        name: status
+        type: string
+      - description: Limit of items to return
+        in: query
+        name: limit
+        type: string
+      - description: Offset for pagination
+        in: query
+        name: offset
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: '#/definitions/swaps.AllSwaps'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Barcha swap so'rovlarni olish
+      tags:
+      - swap
+  /swap/rejectRequest:
+    post:
+      consumes:
+      - application/json
+      description: Ushbu endpoint asosida swap so'rovini rad qilish uchun sababni
+        qabul qilish uchun ishlatiladi.
+      parameters:
+      - description: Reason Payload
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/swaps.Reason'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: '#/definitions/swaps.Responce'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Swap so'rovini rad qilish
+      tags:
+      - swap
+  /swap/sendRequest:
+    post:
+      consumes:
+      - application/json
+      description: Ushbu endpoint avval kiritilgan ma'lumotlar bilan swap so'rovini
+        jo'natish uchun ishlatiladi.
+      parameters:
+      - description: Swap Request Payload
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/swaps.SwapRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: '#/definitions/swaps.SwapResponce'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Swap so'rovini jo'natish
+      tags:
+      - swap
+  /user/createEcopoints:
+    post:
+      consumes:
+      - application/json
+      description: Ushbu endpoint foydalanuvchi uchun eko ballarini yaratish uchun
+        ishlatiladi.
+      parameters:
+      - description: Foydalanuvchi eko ballari ma'lumotlari
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/users.CreateEcoPoints'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Yaratish muvaffaqiyatli
+          schema:
+            $ref: '#/definitions/users.InfoUserEcoPoints'
+        "400":
+          description: Xato so'rov
+          schema:
+            $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Foydalanuvchi eko ballarini yaratish
+      tags:
+      - users
+  /user/deleteProfile/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Ushbu endpoint foydalanuvchi profilini o'chirish uchun ishlatiladi.
+      parameters:
+      - description: Foydalanuvchi ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: O'chirish muvaffaqiyatli
+          schema:
+            $ref: '#/definitions/users.Status'
+        "400":
+          description: Xato so'rov
+          schema:
+            $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Foydalanuvchi profilini o'chirish
+      tags:
+      - users
+  /user/getAllUsers:
+    get:
+      consumes:
+      - application/json
+      description: Ushbu endpoint barcha foydalanuvchilarni olish uchun ishlatiladi.
+      parameters:
+      - description: Foydalanuvchi to'liq ismi
+        in: query
+        name: full_name
+        type: string
+      - description: Limit
+        in: query
+        name: limit
+        type: string
+      - description: Offset
+        in: query
+        name: offset
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Foydalanuvchilar ro'yxati
+          schema:
+            $ref: '#/definitions/users.Users'
+        "400":
+          description: Xato so'rov
+          schema:
+            $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Barcha foydalanuvchilarni olish
+      tags:
+      - users
+  /user/getProfile/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Ushbu endpoint asosida foydalanuvchi profilini olish uchun ishlatiladi.
+      parameters:
+      - description: Foydalanuvchi identifikatori
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: '#/definitions/users.UserInfo'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Foydalanuvchi profilini olish
+      tags:
+      - users
+  /user/historyUserPoint/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Ushbu endpoint foydalanuvchi uchun eko ballari tarixini olish uchun
+        ishlatiladi.
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Limit
+        in: query
+        name: limit
+        type: string
+      - description: Offset
+        in: query
+        name: offset
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Tarix ro'yxati
+          schema:
+            $ref: '#/definitions/users.Histories'
+        "400":
+          description: Xato so'rov
+          schema:
+            $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Foydalanuvchi eko ballari tarixini olish
+      tags:
+      - users
+  /user/updateProfile:
+    put:
+      consumes:
+      - application/json
+      description: Ushbu endpoint foydalanuvchi profilini yangilash uchun ishlatiladi.
+      parameters:
+      - description: Profil yangilash so'rovi
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/users.ProfileUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Yangilash muvaffaqiyatli
+          schema:
+            $ref: '#/definitions/users.UpdateResponse'
+        "400":
+          description: Xato so'rov
+          schema:
+            $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Foydalanuvchi profilini yangilash
+      tags:
+      - users
+  /user/userEcopoints/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Ushbu endpoint foydalanuvchi eko ballarini olish uchun ishlatiladi.
+      parameters:
+      - description: Foydalanuvchi ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Foydalanuvchi eko ballari
+          schema:
+            $ref: '#/definitions/users.UserEcoPoints'
+        "400":
+          description: Xato so'rov
+          schema:
+            $ref: '#/definitions/model.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Foydalanuvchi eko ballarini olish
+      tags:
+      - users
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

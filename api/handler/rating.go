@@ -11,15 +11,14 @@ import (
 
 // @Summary      Foydalanuvchi reytingini yaratish
 // @Description  Ushbu endpoint foydalanuvchi reytingini yaratish uchun ishlatiladi.
-// @Tags         ratings
+// @Tags         rating
 // @Accept       json
 // @Produce      json
 // @Security     ApiKeyAuth
-// @Param        Authorization  header   string        true  "Bearer token"
 // @Param        rating          body     rating.RatingReq  true  "Rating request object"
 // @Success      200            {object}  rating.RatingResp  "Successful response"
 // @Failure      400            {object}  model.Error    "Bad request"
-// @Router       /ratings/createRating      [post]
+// @Router       /rating/createRating      [post]
 func(h *Handler) CreateUserRating(c *gin.Context){
 	req := pb.RatingReq{}
 
@@ -42,22 +41,21 @@ func(h *Handler) CreateUserRating(c *gin.Context){
 
 // @Summary      Foydalanuvchi faoliyatini olish
 // @Description  Ushbu endpoint foydalanuvchi faoliyatini olish uchun ishlatiladi.
-// @Tags         activity
+// @Tags         rating
 // @Accept       json
 // @Produce      json
 // @Security     ApiKeyAuth
-// @Param        Authorization  header   string            true  "Bearer token"
-// @Param        user_id        path     string            true  "User ID"
-// @Param        start_date     query    string            false "Start date (YYYY-MM-DD)"
-// @Param        end_date       query    string            false "End date (YYYY-MM-DD)"
-// @Success      200            {object} rating.UserActivity  "Successful response"
+// @Param        id        path     string            true  "User ID"
+// @Param        start_date     query    string            true "Start date (YYYY-MM-DD)"
+// @Param        end_date       query    string            true "End date (YYYY-MM-DD)"
+// @Success      200            {object} rating.Activity  "Successful response"
 // @Failure      400            {object} model.Error      "Bad request"
 // @Router       /rating/userActivity/{id} [get]
 func(h *Handler) GetUserActivity(c *gin.Context){
-	req := pb.FilterActivity{UserId: c.Param("user_id")}
+	req := pb.FilterActivity{UserId: c.Param("id")}
 
-	req.StartDate = c.Param("start_date")
-	req.EndDate = c.Param("end_date")
+	req.StartDate = c.Query("start_date")
+	req.EndDate = c.Query("end_date")
 
 	resp, err := h.RatingService.GetUserActivity(c, &req)
 	if err != nil{
@@ -75,27 +73,26 @@ func(h *Handler) GetUserActivity(c *gin.Context){
 // @Accept       json
 // @Produce      json
 // @Security     ApiKeyAuth
-// @Param        Authorization  header   string            true  "Bearer token"
 // @Param        user_id        path     string            true  "User ID"
-// @Param        limit          path     integer           true  "Limit"
-// @Param        offset         path     integer           true  "Offset"
-// @Success      200            {object} rating.RatingResponse  "Successful response"
+// @Param        limit          query     string           false  "Limit"
+// @Param        offset         query     string           false  "Offset"
+// @Success      200            {object} rating.UserRating  "Successful response"
 // @Failure      400            {object} model.Error        "Bad request"
-// @Router       /rating/getUserRating/{user_id}/{limit}/{offset} [get]
+// @Router       /rating/getUserRating/{user_id} [get]
 func(h *Handler) GetUserRating(c *gin.Context){
 	req := pb.FilterField{UserId: c.Param("user_id")}
 
 	limit, err := strconv.Atoi(c.Param("limit"))
-	if err != nil{
-		h.Logger.Error(fmt.Sprintf("Limit kiritilmadi yoki xato kiritildi: %v", err))
+	if err == nil{
+		req.Limit = int32(limit)
 	}
 	offset, err := strconv.Atoi(c.Param("offset"))
-	if err != nil{
-		h.Logger.Error(fmt.Sprintf("Offset kiritilmadi yoki xato kiritildi: %v", err))
+	if err == nil{
+		req.Offset = int32(offset)
+	}else{
+		req.Offset = 0
 	} 
 
-	req.Limit = int32(limit)
-	req.Offset = int32(offset)
 
 	resp, err := h.RatingService.GetUserRating(c, &req)
 	if err != nil{

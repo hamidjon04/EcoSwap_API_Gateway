@@ -11,15 +11,14 @@ import (
 
 // @Summary      Yangi challenge yaratish
 // @Description  Ushbu endpoint yangi challenge yaratish uchun ishlatiladi.
-// @Tags         challenges
+// @Tags         challenge
 // @Accept       json
 // @Produce      json
 // @Security 	 ApiKeyAuth
-// @Param        Authorization  header   string   true  "Bearer token"
 // @Param        challenge      body     challenges.Challenge  true  "Challenge payload"
-// @Success      200            {object} challenges.Challenge  "Successful response"
+// @Success      200            {object} challenges.RespChallenge  "Successful response"
 // @Failure      400            {object} model.Error   "Bad request"
-// @Router       challenge/createChallenge    [post]
+// @Router       /challenge/createChallenge [post]
 func (h *Handler) CreateChallenge(c *gin.Context) {
 	req := pb.Challenge{}
 
@@ -36,19 +35,17 @@ func (h *Handler) CreateChallenge(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, err)
 		return
 	}
-
 	c.JSON(http.StatusOK, resp)
 }
 
 // @Summary      challengening ishtirokchisiga bo'lish
 // @Description  Ushbu endpoint challengening ishtirokchisiga bo'lish uchun ishlatiladi.
-// @Tags         challenges
+// @Tags         challenge
 // @Accept       json
 // @Produce      json
 // @Security 	 ApiKeyAuth
-// @Param        Authorization  header   string   true  "Bearer token"
 // @Param        attend          body     challenges.Attend  true  "Attend payload"
-// @Success      200            {object} challenges.Attend  "Successful response"
+// @Success      200            {object} challenges.AttendResp  "Successful response"
 // @Failure      400            {object} model.Error   "Bad request"
 // @Router       /challenge/attend   [post]
 func (h *Handler) AttendChallenge(c *gin.Context) {
@@ -60,6 +57,7 @@ func (h *Handler) AttendChallenge(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, err)
 		return
 	}
+	fmt.Println(req.ChallengeId)
 
 	resp, err := h.ChallengeService.AttendChallenge(c, &req)
 	if err != nil {
@@ -68,18 +66,18 @@ func (h *Handler) AttendChallenge(c *gin.Context) {
 		return
 	}
 
+	fmt.Println(resp)
 	c.JSON(http.StatusOK, resp)
 }
 
 // @Summary      challenge natijasini yangilash
 // @Description  Ushbu endpoint challenge natijasini yangilash uchun ishlatiladi.
-// @Tags         challenges
+// @Tags         challenge
 // @Accept       json
 // @Produce      json
 // @Security 	 ApiKeyAuth
-// @Param        Authorization  header   string   true  "Bearer token"
 // @Param        update          body     challenges.ChallengeUpdate  true  "Update payload"
-// @Success      200            {object} challenges.ChallengeUpdate  "Successful response"
+// @Success      200            {object} challenges.RespUpdate  "Successful response"
 // @Failure      400            {object} model.Error   "Bad request"
 // @Router       /challenge/updateChallenge   [put]
 func (h *Handler) UpdateChallengeResult(c *gin.Context) {
@@ -103,13 +101,12 @@ func (h *Handler) UpdateChallengeResult(c *gin.Context) {
 
 // @Summary      Ekologik maslahat yaratish
 // @Description  Ushbu endpoint ekologik maslahat yaratish uchun ishlatiladi.
-// @Tags         eco_tips
+// @Tags         ico_tip
 // @Accept       json
 // @Produce      json
 // @Security 	 ApiKeyAuth
-// @Param        Authorization  header   string   true  "Bearer token"
 // @Param        create          body     challenges.EcoTip  true  "Create payload"
-// @Success      200            {object} challenges.EcoTip  "Successful response"
+// @Success      200            {object} challenges.RespEcoTip  "Successful response"
 // @Failure      400            {object} model.Error   "Bad request"
 // @Router       /challenge/createEcoTip   [post]
 func (h *Handler) CreateEcoTips(c *gin.Context) {
@@ -133,33 +130,32 @@ func (h *Handler) CreateEcoTips(c *gin.Context) {
 
 // @Summary      Ekologik maslahatlar ro'yxati
 // @Description  Ushbu endpoint ekologik maslahatlar ro'yxatini olish uchun ishlatiladi.
-// @Tags         eco_tips
+// @Tags         ico_tip
 // @Accept       json
 // @Produce      json
 // @Security 	 ApiKeyAuth
-// @Param        Authorization  header   string   true  "Bearer token"
 // @Param        title          query     string   false  "Filter by title"
-// @Param        limit          path      int      true   "Limit"
-// @Param        offset         path      int      true   "Offset"
-// @Success      200            {object}  challenges.EcoTipList  "Successful response"
+// @Param        limit          query      string      false   "Limit"
+// @Param        offset         query      string      false   "Offset"
+// @Success      200            {object}  challenges.Tips  "Successful response"
 // @Failure      400            {object}  model.Error    "Bad request"
-// @Router       /challenge/getAllEcoTips/{limit}/{offset}   [get]
+// @Router       /challenge/getAllEcoTips/   [get]
 func (h *Handler) GetAllEcoTips(c *gin.Context) {
 	req := pb.FilterTip{}
 
 	req.Title = c.Query("title")
 
 	limit, err := strconv.Atoi(c.Param("limit"))
-	if err != nil {
-		h.Logger.Error(fmt.Sprintf("Limit kiritilmadi yoki xato kiritildi: %v", err))
+	if err == nil {
+		req.Limit = int32(limit)
 	}
 	offset, err := strconv.Atoi(c.Param("offset"))
-	if err != nil {
-		h.Logger.Error(fmt.Sprintf("Offset kiritilmadi yoki xato kiritildi: %v", err))
+	if err == nil {
+		req.Offset = int32(offset)
+	}else{
+		req.Offset = 0
 	}
 
-	req.Limit = int32(limit)
-	req.Offset = int32(offset)
 
 	resp, err := h.ChallengeService.GetAllEcoTips(c, &req)
 	if err != nil {
