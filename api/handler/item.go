@@ -11,13 +11,12 @@ import (
 
 // @Summary      Mahsulot qo'shish
 // @Description  Ushbu endpoint mahsulot qo'shish uchun ishlatiladi.
-// @Tags         items
+// @Tags         item
 // @Accept       json
 // @Produce      json
 // @Security 	 ApiKeyAuth
-// @Param        Authorization  header   string   true  "Bearer token"
 // @Param        item            body     items.Item  true  "Item object"
-// @Success      200            {object}  items.Item  "Successful response"
+// @Success      200            {object}  items.ItemResponce  "Successful response"
 // @Failure      400            {object}  model.Error  "Bad request"
 // @Router       /item/createItem  [post]
 func (h *Handler) CreateItem(c *gin.Context) {
@@ -41,13 +40,12 @@ func (h *Handler) CreateItem(c *gin.Context) {
 
 // @Summary      Mahsulotni yangilash
 // @Description  Ushbu endpoint mahsulotni yangilash uchun ishlatiladi.
-// @Tags         items
+// @Tags         item
 // @Accept       json
 // @Produce      json
 // @Security 	 ApiKeyAuth
-// @Param        Authorization  header   string   true  "Bearer token"
 // @Param        item_update    body     items.ItemUpdate  true  "Item Update object"
-// @Success      200            {object}  items.Item  "Successful response"
+// @Success      200            {object}  items.UpdateResponse  "Successful response"
 // @Failure      400            {object}  model.Error  "Bad request"
 // @Router       /item/updateItem  [put]
 func (h *Handler) UpdateItem(c *gin.Context) {
@@ -71,15 +69,14 @@ func (h *Handler) UpdateItem(c *gin.Context) {
 
 // @Summary      Mahsulotni o'chirish
 // @Description  Ushbu endpoint mahsulotni o'chirish uchun ishlatiladi.
-// @Tags         items
+// @Tags         item
 // @Accept       json
 // @Produce      json
 // @Security 	 ApiKeyAuth
-// @Param        Authorization  header   string   true  "Bearer token"
 // @Param        id             path     string   true  "Item ID"
-// @Success      200            {object}  items.DeleteResponse  "Successful response"
+// @Success      200            {object}  items.Status  "Successful response"
 // @Failure      400            {object}  model.Error        "Bad request"
-// @Router       /item/deleteItem{id}    [delete]
+// @Router       /item/deleteItem/{id}    [delete]
 func (h *Handler) DeleteItem(c *gin.Context) {
 	id := c.Param("id")
 
@@ -95,15 +92,14 @@ func (h *Handler) DeleteItem(c *gin.Context) {
 
 // @Summary      Mahsulotni olish
 // @Description  Ushbu endpoint mahsulotni olish uchun ishlatiladi.
-// @Tags         items
+// @Tags         item
 // @Accept       json
 // @Produce      json
 // @Security 	 ApiKeyAuth
-// @Param        Authorization  header   string   true  "Bearer token"
 // @Param        id             path     string   true  "Item ID"
-// @Success      200            {object}  items.Item  "Successful response"
+// @Success      200            {object}  items.GetItemResp  "Successful response"
 // @Failure      400            {object}  model.Error  "Bad request"
-// @Router       /item/getItem{id}    [get]
+// @Router       /item/getItem/{id}    [get]
 func (h *Handler) GetItem(c *gin.Context) {
 	id := c.Param("id")
 
@@ -119,17 +115,16 @@ func (h *Handler) GetItem(c *gin.Context) {
 
 // @Summary      Mahsulotlarni qidirish
 // @Description  Ushbu endpoint mahsulotlarni qidirish uchun ishlatiladi.
-// @Tags         items
+// @Tags         item
 // @Accept       json
 // @Produce      json
 // @Security 	 ApiKeyAuth
-// @Param        Authorization  header   string   true  "Bearer token"
 // @Param        category_id    query    string   false  "Category ID"
 // @Param        condition      query    string   false  "Condition"
 // @Param        name           query    string   false  "Name"
-// @Param        limit          path     integer  false  "Limit"
-// @Param        offset         path     integer  false  "Offset"
-// @Success      200            {object}  items.ItemList  "Successful response"
+// @Param        limit          query    string  false  "Limit"
+// @Param        offset         query     string  false  "Offset"
+// @Success      200            {object}  items.AllItems  "Successful response"
 // @Failure      400            {object}  model.Error  "Bad request"
 // @Router       /item/searchItem  [get]
 func (h *Handler) SearchItems(c *gin.Context) {
@@ -139,17 +134,17 @@ func (h *Handler) SearchItems(c *gin.Context) {
 	req.Condition = c.Query("condition")
 	req.Name = c.Query("name")
 	
-	limit, err := strconv.Atoi(c.Param("limit"))
-	if err != nil {
-		h.Logger.Error(fmt.Sprintf("Limit kiritilmadi yoki xato kiritildi: %v", err))
+	limit, err := strconv.Atoi(c.Query("limit"))
+	if err == nil {
+		req.Limit = int32(limit)
 	}
-	offset, err := strconv.Atoi(c.Param("offset"))
-	if err != nil {
-		h.Logger.Error(fmt.Sprintf("Offset kiritilmadi yoki xato kiritildi: %v", err))
+	offset, err := strconv.Atoi(c.Query("offset"))
+	if err == nil {
+		req.Offset = int32(offset)
+	}else{
+		req.Offset = 0
 	}
 
-	req.Limit = int32(limit)
-	req.Offset = int32(offset)
 
 	resp, err := h.ItemService.SearchItems(c, &req)
 	if err != nil {
@@ -162,30 +157,29 @@ func (h *Handler) SearchItems(c *gin.Context) {
 
 // @Summary      Barcha mahsulotlarni olish
 // @Description  Ushbu endpoint barcha mahsulotlarni olish uchun ishlatiladi.
-// @Tags         items
+// @Tags         item
 // @Accept       json
 // @Produce      json
 // @Security     ApiKeyAuth
-// @Param        Authorization  header   string   true  "Bearer token"
-// @Param        limit          path     integer  false  "Limit"
-// @Param        offset         path     integer  false  "Offset"
-// @Success      200            {object}  items.ItemList  "Successful response"
+// @Param        limit          query     string  false  "Limit"
+// @Param        offset         query     string  false  "Offset"
+// @Success      200            {object}  items.AllItems  "Successful response"
 // @Failure      400            {object}  model.Error  "Bad request"
 // @Router       /item/getAllItems     [get]
 func (h *Handler) GetAllItems(c *gin.Context) {
 	req := pb.Limit{}
 
-	limit, err := strconv.Atoi(c.Param("limit"))
-	if err != nil{
-		h.Logger.Error(fmt.Sprintf("Limit kiritilmadi yoki xato kiritildi: %v", err))
+	limit, err := strconv.Atoi(c.Query("limit"))
+	if err == nil{
+		req.Limit = int32(limit)
 	}
-	offset, err := strconv.Atoi(c.Param("offset"))
-	if err != nil{
-		h.Logger.Error(fmt.Sprintf("Offset kiritilmadi yoki xato kiritildi: %v", err))
+	offset, err := strconv.Atoi(c.Query("offset"))
+	if err == nil{
+		req.Offset = int32(offset)
+	}else{
+		req.Offset = 0
 	} 
 
-	req.Limit = int32(limit)
-	req.Offset = int32(offset)
 
 	resp, err := h.ItemService.GetAllItems(c, &req)
 	if err != nil {
@@ -198,13 +192,12 @@ func (h *Handler) GetAllItems(c *gin.Context) {
 
 // @Summary      Kategoriya yaratish
 // @Description  Ushbu endpoint kategoriya yaratish uchun ishlatiladi.
-// @Tags         categories
+// @Tags         item
 // @Accept       json
 // @Produce      json
 // @Security     ApiKeyAuth
-// @Param        Authorization  header   string   true  "Bearer token"
 // @Param        category       body     items.Category  true  "Category object"
-// @Success      200            {object}  items.Category  "Successful response"
+// @Success      200            {object}  items.CategoryResponse  "Successful response"
 // @Failure      400            {object}  model.Error  "Bad request"
 // @Router       /item/createCategory    [post]
 func (h *Handler) CreateCategory(c *gin.Context) {

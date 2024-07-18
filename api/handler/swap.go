@@ -15,9 +15,8 @@ import (
 // @Accept       json
 // @Produce      json
 // @Security     ApiKeyAuth
-// @Param        Authorization  header   string            true  "Bearer token"
 // @Param        body           body     swaps.SwapRequest    true  "Swap Request Payload"
-// @Success      200            {object} swaps.SwapResponse  "Successful response"
+// @Success      200            {object} swaps.SwapResponce  "Successful response"
 // @Failure      400            {object} model.Error      "Bad request"
 // @Router       /swap/sendRequest [post]
 func (h *Handler) SendSwapRequest(c *gin.Context) {
@@ -46,9 +45,8 @@ func (h *Handler) SendSwapRequest(c *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Security     ApiKeyAuth
-// @Param        Authorization  header   string          true  "Bearer token"
 // @Param        body           body     swaps.Reason       true  "Reason Payload"
-// @Success      200            {object} swaps.SwapStatus  "Successful response"
+// @Success      200            {object} swaps.Responce  "Successful response"
 // @Failure      400            {object} model.Error    "Bad request"
 // @Router       /swap/adoptionSwap [post]
 func (h *Handler) AdoptionSwapRequest(c *gin.Context) {
@@ -77,9 +75,8 @@ func (h *Handler) AdoptionSwapRequest(c *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Security     ApiKeyAuth
-// @Param        Authorization  header   string          true  "Bearer token"
 // @Param        body           body     swaps.Reason       true  "Reason Payload"
-// @Success      200            {object} swaps.SwapStatus  "Successful response"
+// @Success      200            {object} swaps.Responce  "Successful response"
 // @Failure      400            {object} model.Error    "Bad request"
 // @Router       /swap/rejectRequest [post]
 func (h *Handler) RejectionSwapRequest(c *gin.Context) {
@@ -108,29 +105,28 @@ func (h *Handler) RejectionSwapRequest(c *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Security     ApiKeyAuth
-// @Param        Authorization  header   string            true  "Bearer token"
-// @Param        status         path     string            true  "Status of swap requests (e.g., pending, accepted, rejected)"
-// @Param        limit          path     integer           true  "Limit of items to return"
-// @Param        offset         path     integer           true  "Offset for pagination"
-// @Success      200            {object} swaps.SwapRequests  "Successful response"
+// @Param        status         query     string            false  "Status of swap requests (e.g., pending, accepted, rejected)"
+// @Param        limit          query     string           false  "Limit of items to return"
+// @Param        offset         query     string           false  "Offset for pagination"
+// @Success      200            {object} swaps.AllSwaps  "Successful response"
 // @Failure      400            {object} model.Error      "Bad request"
-// @Router       /swap/allRequests/{status}/{limit}/{offset} [get]
+// @Router       /swap/allRequests/ [get]
 func (h *Handler) GetAllSwapRequests(c *gin.Context) {
 	req := pb.FilterField{}
 
-	req.Status = c.Param("status")
+	req.Status = c.Query("status")
 
-	limit, err := strconv.Atoi(c.Param("limit"))
-	if err != nil {
-		h.Logger.Error(fmt.Sprintf("Limit kiritilmadi yoki xato kiritildi: %v", err))
+	limit, err := strconv.Atoi(c.Query("limit"))
+	if err == nil {
+		req.Limit = int32(limit)
 	}
-	offset, err := strconv.Atoi(c.Param("offset"))
-	if err != nil {
-		h.Logger.Error(fmt.Sprintf("Offset kiritilmadi yoki xato kiritildi: %v", err))
+	offset, err := strconv.Atoi(c.Query("offset"))
+	if err == nil {
+		req.Offset = int32(offset)
+	}else{
+		req.Offset = 0
 	}
 
-	req.Limit = int32(limit)
-	req.Offset = int32(offset)
 
 	resp, err := h.SwapService.GetAllSwapRequests(c, &req)
 	if err != nil{

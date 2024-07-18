@@ -11,13 +11,12 @@ import (
 
 // @Summary      Yangi qayta ishlash markazi yaratish
 // @Description  Ushbu endpoint yangi qayta ishlash markazini yaratish uchun ishlatiladi.
-// @Tags         recycling_center
+// @Tags         center
 // @Accept       json
 // @Produce      json
 // @Security 	 ApiKeyAuth
-// @Param        Authorization   header    string       true  "Bearer token"
 // @Param        recycling_center  body      recycling_center.ResCenter  true  "Recycling Center Payload"
-// @Success      200               {object}  recycling_center.ResCenter  "Successful Response"
+// @Success      200               {object}  recycling_center.ResponceResCenter  "Successful Response"
 // @Failure      400               {object}  model.Error   "Bad Request"
 // @Router       /center/create [post]
 func (h *Handler) CreateRecyclingCenter(c *gin.Context) {
@@ -42,33 +41,31 @@ func (h *Handler) CreateRecyclingCenter(c *gin.Context) {
 
 // @Summary      Qayta ishlash markazini qidirish
 // @Description  Ushbu endpoint qayta ishlash markazini qidirish uchun ishlatiladi.
-// @Tags         recycling_center
+// @Tags         center
 // @Accept       json
 // @Produce      json
 // @Security 	 ApiKeyAuth
-// @Param        Authorization   header    string       true  "Bearer token"
-// @Param        limit   query      integer     true        "Limit"
-// @Param        offset  query      integer     true        "Offset"
+// @Param        limit   query      string     flase        "Limit"
+// @Param        offset  query      string     false       "Offset"
 // @Param        material query     string      false       "Material type"
-// @Success      200               {object}  recycling_center.ResCenter  "Successful Response"
+// @Success      200               {object}  recycling_center.ResAllCenter  "Successful Response"
 // @Failure      400               {object}  model.Error   "Bad Request"
-// @Router       /center/search/{limit}/{offset} [get]
+// @Router       /center/search [get]
 func (h *Handler) SearchRecyclingCenter(c *gin.Context) {
 	req := pb.FilterField{}
 
 	req.Material = c.Query("material")
 
-	limit, err := strconv.Atoi(c.Param("limit"))
-	if err != nil {
-		h.Logger.Error(fmt.Sprintf("Limit kiritilmadi yoki xato kiritildi: %v", err))
+	limit, err := strconv.Atoi(c.Query("limit"))
+	if err == nil {
+		req.Limit = int32(limit)
 	}
-	offset, err := strconv.Atoi(c.Param("offset"))
-	if err != nil {
-		h.Logger.Error(fmt.Sprintf("Offset kiritilmadi yoki xato kiritildi: %v", err))
+	offset, _ := strconv.Atoi(c.Query("offset"))
+	if err == nil {
+		req.Offset = int32(offset)
+	} else {
+		req.Offset = 0
 	}
-
-	req.Limit = int32(limit)
-	req.Offset = int32(offset)
 
 	resp, err := h.CenterService.SearchRecyclingCenter(c, &req)
 	if err != nil {
@@ -81,13 +78,12 @@ func (h *Handler) SearchRecyclingCenter(c *gin.Context) {
 
 // @Summary      Maxsulot yetkazib berish
 // @Description  Ushbu endpoint maxsulot yetkazib berish uchun ishlatiladi.
-// @Tags         delivery
+// @Tags         center
 // @Accept       json
 // @Produce      json
 // @Security 	 ApiKeyAuth
-// @Param        Authorization   header    string       true  "Bearer token"
 // @Param        delivery_body  body      recycling_center.Submission  true  "Delivery Payload"
-// @Success      200               {object}  recycling_center.Status  "Successful Response"
+// @Success      200               {object}  recycling_center.SubmissionResp  "Successful Response"
 // @Failure      400               {object}  model.Error   "Bad Request"
 // @Router       /center/productDelivery [post]
 func (h *Handler) ProductDelivery(c *gin.Context) {
@@ -111,14 +107,13 @@ func (h *Handler) ProductDelivery(c *gin.Context) {
 
 // @Summary      Statistika olish
 // @Description  Ushbu endpoint statistika ma'lumotlarini olish uchun ishlatiladi.
-// @Tags         statistics
+// @Tags         center
 // @Accept       json
 // @Produce      json
 // @Security 	 ApiKeyAuth
-// @Param        Authorization   header    string       true  "Bearer token"
 // @Param        start_date      query     string       true  "Start date in format yyyy-mm-dd"
 // @Param        end_date        query     string       true  "End date in format yyyy-mm-dd"
-// @Success      200             {object}  recycling_center.StatisticField  "Successful Response"
+// @Success      200             {object}  recycling_center.Statistics  "Successful Response"
 // @Failure      400             {object}  model.Error       "Bad Request"
 // @Router       /center/statistics     [get]
 func (h *Handler) GetStatistics(c *gin.Context) {

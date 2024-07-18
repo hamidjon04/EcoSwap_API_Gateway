@@ -15,9 +15,8 @@ import (
 // @Accept       json
 // @Produce      json
 // @Security     ApiKeyAuth
-// @Param        Authorization  header   string            true  "Bearer token"
 // @Param        id             path     string            true  "Foydalanuvchi identifikatori"
-// @Success      200            {object} users.UserProfile   "Successful response"
+// @Success      200            {object} users.UserInfo   "Successful response"
 // @Failure      400            {object} model.Error      "Bad request"
 // @Router       /user/getProfile/{id} [get]
 func (h *Handler) GetProfile(c *gin.Context) {
@@ -37,9 +36,8 @@ func (h *Handler) GetProfile(c *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Security     ApiKeyAuth
-// @Param        Authorization  header   string              true  "Bearer token"
 // @Param        body           body     users.ProfileUpdate    true  "Profil yangilash so'rovi"
-// @Success      200            {object} users.Status          "Yangilash muvaffaqiyatli"
+// @Success      200            {object} users.UpdateResponse          "Yangilash muvaffaqiyatli"
 // @Failure      400            {object} model.Error        "Xato so'rov"
 // @Router       /user/updateProfile [put]
 func (h Handler) UpdateProfile(c *gin.Context) {
@@ -68,7 +66,6 @@ func (h Handler) UpdateProfile(c *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Security     ApiKeyAuth
-// @Param        Authorization  header   string       true  "Bearer token"
 // @Param        id             path     string       true  "Foydalanuvchi ID"
 // @Success      200            {object} users.Status   "O'chirish muvaffaqiyatli"
 // @Failure      400            {object} model.Error "Xato so'rov"
@@ -90,23 +87,22 @@ func (h *Handler) DeleteProfile(c *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Security     ApiKeyAuth
-// @Param        Authorization  header   string       true  "Bearer token"
 // @Param        full_name      query    string       false "Foydalanuvchi to'liq ismi"
-// @Param        limit          path     integer      true  "Limit"
-// @Param        offset         path     integer      true  "Offset"
-// @Success      200            {object} users.UsersList "Foydalanuvchilar ro'yxati"
+// @Param        limit          query     string      false  "Limit"
+// @Param        offset         query     string      false  "Offset"
+// @Success      200            {object} users.Users "Foydalanuvchilar ro'yxati"
 // @Failure      400            {object} model.Error  "Xato so'rov"
-// @Router       /user/getAllUsers/{limit}/{offset} [get]
+// @Router       /user/getAllUsers [get]
 func (h *Handler) GetAllUsers(c *gin.Context) {
 	req := pb.FilterField{}
 
 	req.FullName = c.Query("full_name")
 
-	limit, err := strconv.Atoi(c.Param("limit"))
+	limit, err := strconv.Atoi(c.Query("limit"))
 	if err != nil {
 		h.Logger.Error(fmt.Sprintf("Limit kiritilmadi yoki xato kiritildi: %v", err))
 	}
-	offset, err := strconv.Atoi(c.Param("offset"))
+	offset, err := strconv.Atoi(c.Query("offset"))
 	if err != nil {
 		h.Logger.Error(fmt.Sprintf("Offset kiritilmadi yoki xato kiritildi: %v", err))
 	}
@@ -130,7 +126,6 @@ func (h *Handler) GetAllUsers(c *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Security     ApiKeyAuth
-// @Param        Authorization  header   string       true  "Bearer token"
 // @Param        id              path     string       true  "Foydalanuvchi ID"
 // @Success      200            {object} users.UserEcoPoints  "Foydalanuvchi eko ballari"
 // @Failure      400            {object} model.Error       "Xato so'rov"
@@ -152,9 +147,8 @@ func(h *Handler) GetEcoPointsByUser(c *gin.Context){
 // @Accept       json
 // @Produce      json
 // @Security     ApiKeyAuth
-// @Param        Authorization  header   string            true  "Bearer token"
 // @Param        body           body     users.CreateEcoPoints true  "Foydalanuvchi eko ballari ma'lumotlari"
-// @Success      200            {object} users.Status         "Yaratish muvaffaqiyatli"
+// @Success      200            {object} users.InfoUserEcoPoints         "Yaratish muvaffaqiyatli"
 // @Failure      400            {object} model.Error       "Xato so'rov"
 // @Router       /user/createEcopoints [post]
 func(h *Handler) CreateEcoPointsByUser(c *gin.Context){
@@ -183,20 +177,26 @@ func(h *Handler) CreateEcoPointsByUser(c *gin.Context){
 // @Accept       json
 // @Produce      json
 // @Security     ApiKeyAuth
-// @Param        Authorization  header   string            true  "Bearer token"
-// @Param        body           body     users.HistoryReq     true  "Foydalanuvchi eko ballari tarix so'rovi"
-// @Success      200            {object} users.HistoryUserPointsList  "Tarix ro'yxati"
+// @Param        id             path     string      true   "Id"
+// @Param        limit          query     string      false  "Limit"
+// @Param        offset         query     string      false  "Offset"
+// @Success      200            {object} users.Histories  "Tarix ro'yxati"
 // @Failure      400            {object} model.Error       "Xato so'rov"
-// @Router       /user/historyUserRcopoints/history [get]
+// @Router       /user/historyUserPoint/{id} [get]
 func(h *Handler) HistoryEcoPointsByUser(c *gin.Context){
-	req := pb.HistoryReq{}
+	req := pb.HistoryReq{UserId: c.Param("id")}
 
-	err := c.ShouldBindJSON(&req)
-	if err != nil{
-		h.Logger.Error(fmt.Sprintf("HistoryEcoPointsByUser error: %v", err))
-		c.JSON(http.StatusBadRequest, err)
-		return
+	limit, err := strconv.Atoi(c.Query("limit"))
+	if err == nil {
+		req.Limit = int32(limit)
 	}
+	offset, err := strconv.Atoi(c.Query("offset"))
+	if err == nil {
+		req.Offset = int32(offset)
+	}else{
+		req.Offset = 0
+	}
+	
 
 	resp, err := h.UsersService.HistoryEcoPointsByUser(c, &req)
 	if err != nil{
