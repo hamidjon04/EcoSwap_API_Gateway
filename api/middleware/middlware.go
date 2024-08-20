@@ -37,6 +37,7 @@ func JWTMiddleware() gin.HandlerFunc{
 
 func CORSMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		fmt.Println("Cors middleware")
 	  c.Writer.Header().Set("Content-Type", "application/json")
 	  c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 	  c.Writer.Header().Set("Access-Control-Max-Age", "86400")

@@ -652,7 +652,6 @@ definitions:
           $ref: '#/definitions/users.User'
         type: array
     type: object
-host: localhost:4444
 info:
   contact: {}
   description: This is a sample server for Auth Service.
