@@ -17,6 +17,7 @@ import (
 func NewUsersClient(cfg config.Config) users.UsersServiceClient {
 	grpc, err := grpc.NewClient(cfg.USER_SERVICE, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
+		log.Println("Error", err)
 		log.Println(err)
 		return nil
 	}
@@ -27,6 +28,7 @@ func NewUsersClient(cfg config.Config) users.UsersServiceClient {
 func NewChallengeClient(cfg config.Config) challenges.ChallengesClient{
 	grpc, err := grpc.NewClient(cfg.ITEM_SERVICE, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil{
+		log.Println("Error", err)
 		log.Println(err)
 		return nil
 	}
@@ -37,6 +39,7 @@ func NewChallengeClient(cfg config.Config) challenges.ChallengesClient{
 func NewItemService(cfg config.Config) items.ItemsClient{
 	grpc, err := grpc.NewClient(cfg.ITEM_SERVICE, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil{
+		log.Println("Error", err)
 		log.Println(err)
 		return nil
 	}
@@ -47,6 +50,7 @@ func NewItemService(cfg config.Config) items.ItemsClient{
 func NewRatingService(cfg config.Config) rating.RatingClient{
 	grpc, err := grpc.NewClient(cfg.ITEM_SERVICE, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil{
+		log.Println("Error", err)
 		log.Println(err)
 		return nil
 	}
@@ -57,6 +61,7 @@ func NewRatingService(cfg config.Config) rating.RatingClient{
 func NewCenterService(cfg config.Config) recycling_center.RecyclingCenterClient{
 	grpc, err := grpc.NewClient(cfg.ITEM_SERVICE, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil{
+		log.Println("Error", err)
 		log.Println(err)
 		return nil
 	}
@@ -67,6 +72,7 @@ func NewCenterService(cfg config.Config) recycling_center.RecyclingCenterClient{
 func NewSwapService(cfg config.Config) swaps.SwapsClient{
 	grpc, err := grpc.NewClient(cfg.ITEM_SERVICE, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil{
+		log.Println("Error", err)
 		log.Println(err)
 		return nil
 	}
