@@ -23,7 +23,7 @@ func Router() *gin.Engine {
 
 	// Swagger endpointini sozlash
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-	router.Use(middleware.JWTMiddleware())
+	router.Use(middleware.JWTMiddleware(), middleware.CORSMiddleware())
 
 	center := router.Group("/center")
 	center.POST("/create", h.CreateRecyclingCenter)
